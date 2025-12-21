@@ -41,6 +41,7 @@ To ensure the game runs correctly, the following folder structure is maintained:
 ├── /Media                  (Sprites for characters, tiles, and menu frames)
 ├── /UI                     (Textures for buttons and overlays)
 └── /Audio                  (Music and sound effect files)
+```
 
 ---------------------------------------------------------------------------------
 ## 3. COMPILATION AND INSTALLATION
