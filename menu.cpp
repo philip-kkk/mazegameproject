@@ -807,7 +807,7 @@ void draw_next_level_screen(sf::RenderWindow &window)
     titleSprite.setPosition(NEW_CENTER_X, 200.f);
     window.draw(titleSprite);
 
-    const float BUTTON_Y = 300.f;
+    const float BUTTON_Y = 350.f;
 
     // Nút Continue
     sf::Sprite btnContinue(tex_continue, BUTTON_RECT);
