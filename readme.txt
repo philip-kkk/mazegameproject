@@ -4,7 +4,7 @@
 ---------------------------------------------------------------------------------
 Maze of Malice is a 2D turn-based strategic puzzle game. The player must 
 navigate through dangerous mazes to reach the exit gate while avoiding 
-intelligent enemies (Goblins, Slimes) and deadly traps. 
+intelligent enemies (Goblins, Slimes) and deadly traps. The game uses both ASCII Graphics on the console and SFML Graphics.
 
 The game features:
 - Strategic turn-based movement.
@@ -45,7 +45,7 @@ To ensure the game runs correctly, the following folder structure is maintained:
 
 3. COMPILATION AND INSTALLATION
 ---------------------------------------------------------------------------------
-Prerequisites: SFML Library (v2.5.1) and a C++17 compiler.
+Prerequisites: SFML Library (v2.5.1) and a C++17 compiler (g++.exe (MinGW-W64 x86_64-msvcrt-posix-seh, built by Brecht Sander) 12.1.0).
 
 * For Command Line:
   g++ main.cpp frontend.cpp levels.cpp logic.cpp visualise.cpp menu.cpp -I SFML/include -L SFML/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -o main.exe
@@ -75,8 +75,6 @@ Prerequisites: SFML Library (v2.5.1) and a C++17 compiler.
 
 5. KNOWN ISSUES
 ---------------------------------------------------------------------------------
-* Slime AI is not fully optimized.
-* Collision sometimes fails in corner cases.
 * Only 4 levels, no random generation.
 
 
@@ -99,4 +97,5 @@ Developed by (Name + Student ID):
 * [Nguyễn Nhật Quỳnh - 25127131 - 25C11 - University of Science, VNU-HCM]
 * [Trần Ngọc Nghĩa - 25127431 - 25C11 - University of Science, VNU-HCM]
 Library:      SFML (Simple and Fast Multimedia Library)
+
 
