@@ -1,7 +1,7 @@
 # PROJECT: MAZE OF MALICE
 
-## 1. INTRODUCTION
 ---------------------------------------------------------------------------------
+## 1. INTRODUCTION
 Maze of Malice is a 2D turn-based strategic puzzle game. The player must 
 navigate through dangerous mazes to reach the exit gate while avoiding 
 intelligent enemies (Goblins, Slimes) and deadly traps. 
@@ -12,9 +12,8 @@ The game features:
 - Have "Undo" and "Reset" system to correct tactical mistakes.
 - Progressive difficulty through multiple levels.
 
-
-## 2. PROJECT STRUCTURE
 ---------------------------------------------------------------------------------
+## 2. PROJECT STRUCTURE
 To ensure the game runs correctly, the following folder structure is maintained:
 
 [Source code]
@@ -43,9 +42,8 @@ To ensure the game runs correctly, the following folder structure is maintained:
 ├── /UI                     (Textures for buttons and overlays)
 └── /Audio                  (Music and sound effect files)
 
-
-## 3. COMPILATION AND INSTALLATION
 ---------------------------------------------------------------------------------
+## 3. COMPILATION AND INSTALLATION
 Prerequisites: SFML Library (v2.5+) and a C++17 compiler.
 
 * **For Command Line**:
@@ -58,8 +56,8 @@ Prerequisites: SFML Library (v2.5+) and a C++17 compiler.
      folder as the generated .exe file.
 
 
-## 4. USER GUIDE (HOW TO PLAY)
 ---------------------------------------------------------------------------------
+## 4. USER GUIDE (HOW TO PLAY)
 * **Movement**: Use W, A, S, D or Arrow Keys to move one tile per turn.
 * **Undo**: Press 'R' to reverse your last move or the "Undo" button.
 * **Reset**: Press 'M' to restart the current level or the "Reset" button.
@@ -74,14 +72,14 @@ Prerequisites: SFML Library (v2.5+) and a C++17 compiler.
   - **Stair**: Your destination to clear the level.
 
 
-## 5. KNOWN ISSUES
 ---------------------------------------------------------------------------------
+## 5. KNOWN ISSUES
 * Collision does not have proper effects.
 * Only 4 levels, no random generation.
 
 
-## 6. FUTURE IDEAS
 ---------------------------------------------------------------------------------
+## 6. FUTURE IDEAS
 * Add boss monster (Minotaur).
 * Add shop system/power-up items.
 * Add more suitable effects.
@@ -90,8 +88,8 @@ Prerequisites: SFML Library (v2.5+) and a C++17 compiler.
 * Procedural maze generation.
 
 
-## 7. CREDITS
 ---------------------------------------------------------------------------------
+## 7. CREDITS
 Developed by (Name + Student ID):   
 * [Dương Trung Anh - 25127012 - 25C11 - University of Science, VNU-HCM]
 * [Hà Trần Bội Anh - 25127013 - 25C11 - University of Science, VNU-HCM]
