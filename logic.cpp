@@ -76,7 +76,8 @@ void player_move(const vector<vector<int>> &wall, char &input,
 }
 
 // Goblin đi 2 bước / turn
-void white_goblin_move(const vector<vector<int>> &wall,
+void white_goblin_move(vector<string> &maze,
+                       const vector<vector<int>> &wall,
                        int &goblin_r, int &goblin_c,
                        bool &caught,
                        int &player_r, int &player_c,
@@ -134,6 +135,8 @@ void white_goblin_move(const vector<vector<int>> &wall,
         // di chuyển
         goblin_r += dr[best_dir];
         goblin_c += dc[best_dir];
+        maze[old_r][old_c] = '.';
+        maze[goblin_r][goblin_c] = 'M';
         start_entity_animation(anim, old_r, old_c, goblin_r, goblin_c, goblin_dir);
         anim.moving = true;
 
@@ -192,7 +195,8 @@ void white_goblin_move(const vector<vector<int>> &wall,
 }
 
 // Slime đi 1 bước / turn
-void white_slime_move(const vector<vector<int>> &wall,
+void white_slime_move(vector<string> &maze,
+                      const vector<vector<int>> &wall,
                       int &slime_r, int &slime_c,
                       bool &caught,
                       int &player_r, int &player_c,
@@ -244,6 +248,8 @@ void white_slime_move(const vector<vector<int>> &wall,
                        moves, (goblin_r != -1) + (goblin2_r != -1), (slime_r != -1));
         return;
     }
+    maze[slime_r][slime_c] = '.';
+    maze[slime_r + dr[best_dir]][slime_c + dc[best_dir]] = 'S';
     int old_r = slime_r, old_c = slime_c;
     int slime_dir = logicDir_to_visualDir(best_dir);
     slime_r += dr[best_dir];

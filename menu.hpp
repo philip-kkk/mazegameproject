@@ -7,20 +7,22 @@
 #include <vector>
 #include <string>
 
+using namespace std;
+
 struct VideoBG
 {
-    std::string pattern; // "Media/menuFrames/frame_%04d.jpg"
+    string pattern; // "Media/menuFrames/frame_%04d.jpg"
     float fps = 30.f;
     int frame = 0;
     bool loaded = false;
 
     sf::Clock clock;
-    sf::Texture tex; // MUST sống lâu
+    sf::Texture tex;
     sf::Sprite spr;
 };
 
 // trả về true nếu load OK
-bool video_init(VideoBG &v, const std::string &pattern, float fps);
+bool video_init(VideoBG &v, const string &pattern, float fps);
 
 // gọi mỗi frame
 void video_update(VideoBG &v, int mx, int reset_idx);
@@ -48,7 +50,7 @@ void stop_game_win_music();
 
 // BUTTON UTILITIES
 bool is_button_clicked(const sf::Event &event, float x, float y, float width, float height);
-void draw_button(sf::RenderWindow &window, sf::Font &font, const std::string &text,
+void draw_button(sf::RenderWindow &window, sf::Font &font, const string &text,
                  float x, float y, float width, float height, sf::Color bgColor, sf::Color textColor);
 
 // HUD BUTTONS CONSTANTS
@@ -76,7 +78,7 @@ extern sf::Texture reset;
 extern sf::Texture undo;
 
 // SPRITE BUTTON FUNCTIONS
-sf::FloatRect draw_hud_sprite_button(sf::RenderWindow &window, const std::string &textureFile,
+sf::FloatRect draw_hud_sprite_button(sf::RenderWindow &window, const string &textureFile,
                                      float x, float y, bool &isHovered,
                                      float targetWidth = 140.f,
                                      float targetHeight = 50.f);

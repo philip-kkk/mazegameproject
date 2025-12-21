@@ -31,6 +31,29 @@ void save_progress(int level)
     fout << level;
 }
 
+void clear_screen()
+{
+    system("cls");
+}
+
+void print_map(vector<string> &maze)
+{
+    for (string &row : maze)
+    {
+        cout << row << '\n';
+    }
+}
+
+void ascii_game_over()
+{
+    cout << "Game over!\nYou got caught";
+}
+
+void ascii_game_win()
+{
+    cout << "Congratulations! You have escaped the maze";
+}
+
 int level_0(sf::RenderWindow &window)
 {
     // ref: https://postimg.cc/w3fkDvww
@@ -110,6 +133,17 @@ int level_0(sf::RenderWindow &window)
     while (window.isOpen())
     {
         char input = '0';
+        clear_screen();
+        print_map(maze);
+        if (caught)
+        {
+            ascii_game_over();
+        }
+
+        if (win)
+        {
+            ascii_game_win();
+        }
 
         // SFML event & keyboard handling
         sf::Event event;
@@ -182,12 +216,19 @@ int level_0(sf::RenderWindow &window)
                 if (player.size() == 1)
                     continue;
                 // go back
+                maze[player_r][player_c] = '.';
+                if (goblin_r != -1)
+                    maze[goblin_r][goblin_c] = '.';
                 player.pop_back();
                 goblin.pop_back();
                 player_r = player.back().first;
                 player_c = player.back().second;
                 goblin_r = goblin.back().first;
                 goblin_c = goblin.back().second;
+
+                maze[player_r][player_c] = 'P';
+                if (goblin_r != -1)
+                    maze[goblin_r][goblin_c] = 'M';
 
                 player_anim.target_r = player_r;
                 player_anim.target_c = player_c;
@@ -200,6 +241,9 @@ int level_0(sf::RenderWindow &window)
             // reset
             if (input == 'm')
             {
+                maze[player_r][player_c] = '.';
+                if (goblin_r != -1)
+                    maze[goblin_r][goblin_c] = '.';
                 // return to first stored location
                 player_r = player.front().first;
                 player_c = player.front().second;
@@ -211,6 +255,10 @@ int level_0(sf::RenderWindow &window)
                 // re-create history
                 player.push_back({player_r, player_c});
                 goblin.push_back({goblin_r, goblin_c});
+                maze[player_r][player_c] = 'P';
+                if (goblin_r != -1)
+                    maze[goblin_r][goblin_c] = 'M';
+
                 player_anim.target_r = player_r;
                 player_anim.target_c = player_c;
                 goblin_anim.target_r = goblin_r;
@@ -230,6 +278,7 @@ int level_0(sf::RenderWindow &window)
                 if (nxt_r == goblin_r && nxt_c == goblin_c)
                 {
                     caught = true;
+                    maze[player_r][player_c] = '.';
                     continue;
                 }
 
@@ -239,6 +288,8 @@ int level_0(sf::RenderWindow &window)
                     win = true;
                 }
 
+                maze[player_r][player_c] = '.';
+                maze[nxt_r][nxt_c] = 'P';
                 player_r = nxt_r;
                 player_c = nxt_c;
                 player.push_back({player_r, player_c});
@@ -261,8 +312,10 @@ int level_0(sf::RenderWindow &window)
 
                     int goblin_dir = logicDir_to_visualDir(d);
                     goblin_anim.dir = goblin_dir;
+                    maze[goblin_r][goblin_c] = '.';
                     goblin_r += dr[d];
                     goblin_c += dc[d];
+                    maze[goblin_r][goblin_c] = 'M';
                     start_entity_animation(goblin_anim, old_r, old_c, goblin_r, goblin_c, goblin_dir);
                     goblin_anim.moving = true;
 
@@ -389,6 +442,18 @@ int run_level(vector<string> &maze, vector<vector<int>> &wall, sf::RenderWindow 
 
     while (window.isOpen())
     {
+        clear_screen();
+        print_map(maze);
+
+        if (trap || caught)
+        {
+            ascii_game_over();
+        }
+
+        if (win)
+        {
+            ascii_game_win();
+        }
         char input = '0';
 
         // SFML keyboard input
@@ -460,6 +525,13 @@ int run_level(vector<string> &maze, vector<vector<int>> &wall, sf::RenderWindow 
             {
                 if (player.size() == 1)
                     continue;
+                maze[player_r][player_c] = '.';
+                if (goblin_r != -1)
+                    maze[goblin_r][goblin_c] = '.';
+                if (goblin2_r != -1)
+                    maze[goblin2_r][goblin2_c] = '.';
+                if (slime_r != -1)
+                    maze[slime_r][slime_c] = '.';
                 player.pop_back();
                 goblin.pop_back();
                 goblin2.pop_back();
@@ -469,6 +541,13 @@ int run_level(vector<string> &maze, vector<vector<int>> &wall, sf::RenderWindow 
                 goblin2_r = goblin2.back().first, goblin2_c = goblin2.back().second;
                 slime_r = slime.back().first, slime_c = slime.back().second;
 
+                maze[player_r][player_c] = 'P';
+                if (goblin_r != -1)
+                    maze[goblin_r][goblin_c] = 'M';
+                if (goblin2_r != -1)
+                    maze[goblin2_r][goblin2_c] = 'M';
+                if (slime_r != -1)
+                    maze[slime_r][slime_c] = 'S';
                 player_anim.target_r = player_r;
                 player_anim.target_c = player_c;
                 goblin_anim.target_r = goblin_r;
@@ -484,6 +563,13 @@ int run_level(vector<string> &maze, vector<vector<int>> &wall, sf::RenderWindow 
             // Reset
             if (input == 'm')
             {
+                maze[player_r][player_c] = '.';
+                if (goblin_r != -1)
+                    maze[goblin_r][goblin_c] = '.';
+                if (goblin2_r != -1)
+                    maze[goblin2_r][goblin2_c] = '.';
+                if (slime_r != -1)
+                    maze[slime_r][slime_c] = '.';
                 player_r = player.front().first, player_c = player.front().second;
                 goblin_r = goblin.front().first, goblin_c = goblin.front().second;
                 goblin2_r = goblin2.front().first, goblin2_c = goblin2.front().second;
@@ -494,6 +580,14 @@ int run_level(vector<string> &maze, vector<vector<int>> &wall, sf::RenderWindow 
                 goblin.push_back({goblin_r, goblin_c});
                 goblin2.push_back({goblin2_r, goblin2_c});
                 slime.push_back({slime_r, slime_c});
+
+                maze[player_r][player_c] = 'P';
+                if (goblin_r != -1)
+                    maze[goblin_r][goblin_c] = 'M';
+                if (goblin2_r != -1)
+                    maze[goblin2_r][goblin2_c] = 'M';
+                if (slime_r != -1)
+                    maze[slime_r][slime_c] = 'S';
 
                 player_anim.target_r = player_r;
                 player_anim.target_c = player_c;
@@ -524,33 +618,36 @@ int run_level(vector<string> &maze, vector<vector<int>> &wall, sf::RenderWindow 
                     (nxt_player_r == slime_r && nxt_player_c == slime_c))
                 {
                     caught = true;
+                    maze[player_r][player_c] = '.';
                     continue;
                 }
                 if (nxt_player_r == win_r && nxt_player_c == win_c)
                 {
                     win = true;
                 }
+                maze[player_r][player_c] = '.';
+                maze[nxt_player_r][nxt_player_c] = 'P';
 
                 player_r = nxt_player_r, player_c = nxt_player_c;
                 player.push_back({player_r, player_c});
 
                 if (goblin_r != -1)
                 {
-                    white_goblin_move(wall, goblin_r, goblin_c, caught, player_r, player_c,
+                    white_goblin_move(maze, wall, goblin_r, goblin_c, caught, player_r, player_c,
                                       goblin2_r, goblin2_c, slime_r, slime_c, trap_r, trap_c, window, win_r, win_c, player.size() - 1, goblin_anim, 1);
                 }
                 goblin.push_back({goblin_r, goblin_c});
 
                 if (goblin2_r != -1)
                 {
-                    white_goblin_move(wall, goblin2_r, goblin2_c, caught, player_r, player_c,
+                    white_goblin_move(maze, wall, goblin2_r, goblin2_c, caught, player_r, player_c,
                                       goblin_r, goblin_c, slime_r, slime_c, trap_r, trap_c, window, win_r, win_c, player.size() - 1, goblin2_anim, 2);
                 }
                 goblin2.push_back({goblin2_r, goblin2_c});
 
                 if (slime_r != -1)
                 {
-                    white_slime_move(wall, slime_r, slime_c, caught, player_r, player_c,
+                    white_slime_move(maze, wall, slime_r, slime_c, caught, player_r, player_c,
                                      goblin_r, goblin_c, goblin2_r, goblin2_c, trap_r, trap_c, window, win_r, win_c, player.size() - 1);
                 }
                 slime.push_back({slime_r, slime_c});

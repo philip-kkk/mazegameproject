@@ -38,7 +38,7 @@ void draw_maze(sf::RenderWindow &window, const vector<vector<int>> &wall, int wi
     float usableW = window.getSize().x - SIDEBAR - MARGIN;
     float usableH = window.getSize().y - MARGIN - 250;
 
-    float tile = std::min(usableW / cols, usableH / rows);
+    float tile = min(usableW / cols, usableH / rows);
 
     // Offset căn giữa maze
     float offsetX = SIDEBAR + (usableW - cols * tile) / 2.f + 50;

@@ -264,7 +264,7 @@ void apply_hover_effect_old(sf::RenderWindow &window, sf::Sprite &btn)
 }
 
 // Hàm vẽ button dạng hình chữ nhật (fallback)
-void draw_button(sf::RenderWindow &window, sf::Font &font, const std::string &text,
+void draw_button(sf::RenderWindow &window, sf::Font &font, const string &text,
                  float x, float y, float width, float height, sf::Color bgColor, sf::Color textColor)
 {
     // Vẽ nền nút
@@ -316,7 +316,7 @@ static bool load_frame(VideoBG &v, int idx)
     return true;
 }
 
-bool video_init(VideoBG &v, const std::string &pattern, float fps)
+bool video_init(VideoBG &v, const string &pattern, float fps)
 {
     v.pattern = pattern;
     v.fps = fps;
@@ -388,7 +388,7 @@ void draw_hud(sf::RenderWindow &window, int moves, int goblin_alive, int slime_a
         game_bg_video_loaded = video_init(game_bg_video, "Media/gameFrames/frame_%04d.jpg", 30.f);
         if (!game_bg_video_loaded)
         {
-            std::cout << "FAILED to load menu video frames! Check path.\n";
+            cout << "FAILED to load menu video frames! Check path.\n";
         }
     }
 
@@ -408,7 +408,7 @@ void draw_hud(sf::RenderWindow &window, int moves, int goblin_alive, int slime_a
     const float LINE_SPACING = 40.f;
     START_Y += t.getGlobalBounds().height;
     // 1. Lượt đi
-    hud_text.setString("Moves: " + std::to_string(moves));
+    hud_text.setString("Moves: " + to_string(moves));
     hud_text.setPosition(SIDEBAR_WIDTH / 6.f, START_Y);
     window.draw(hud_text);
 
@@ -472,7 +472,7 @@ void draw_main_menu(sf::RenderWindow &window)
         menu_video_loaded = video_init(menu_video, "Media/menuFrames/frame_%04d.jpg", 30.f);
         if (!menu_video_loaded)
         {
-            std::cout << "FAILED to load menu video frames! Check path.\n";
+            cout << "FAILED to load menu video frames! Check path.\n";
         }
     }
 
@@ -569,7 +569,7 @@ void draw_how_to_play(sf::RenderWindow &window)
     instruction.setCharacterSize(40);
     instruction.setFillColor(sf::Color::White);
 
-    std::string help_text =
+    string help_text =
         "Goal: Escape the maze by reaching the portal.\n\n"
         "Player: Moves 1 space per turn (or don't move).\n"
         "Goblin: Moves 2 spaces per turn, following the shortest path.\n"

@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+using namespace std;
+
 // --- ĐỊNH NGHĨA KÍCH THƯỚC CHUẨN ---
 extern float TILE_SIZE;
 extern float GLOBAL_OFFSET_X;
@@ -28,6 +30,6 @@ extern sf::Texture border_vertical;
 extern sf::Texture border_horizontal;
 
 // Thêm tham số offset_x, offset_y vào các hàm vẽ game
-void draw_maze(sf::RenderWindow &window, const std::vector<std::vector<int>> &wall, int win_r, int win_c);
+void draw_maze(sf::RenderWindow &window, const vector<vector<int>> &wall, int win_r, int win_c);
 void draw_entity(sf::RenderWindow &window, int r, int c, sf::Texture &texture);
 #endif
