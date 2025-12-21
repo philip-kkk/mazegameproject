@@ -98,4 +98,5 @@ Developed by (Name + Student ID):
 * [Nguyễn Tuấn Nghĩa - 25127101 - 25C11 - University of Science, VNU-HCM]
 * [Nguyễn Nhật Quỳnh - 25127131 - 25C11 - University of Science, VNU-HCM]
 * [Trần Ngọc Nghĩa - 25127431 - 25C11 - University of Science, VNU-HCM]
+<br>
 Library:      SFML (Simple and Fast Multimedia Library)
