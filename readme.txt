@@ -75,6 +75,7 @@ Prerequisites: SFML Library (v2.5.1) and a C++17 compiler (g++.exe (MinGW-W64 x8
 
 5. KNOWN ISSUES
 ---------------------------------------------------------------------------------
+* Collisions' effects need improvement.
 * Only 4 levels, no random generation.
 
 
@@ -97,5 +98,6 @@ Developed by (Name + Student ID):
 * [Nguyễn Nhật Quỳnh - 25127131 - 25C11 - University of Science, VNU-HCM]
 * [Trần Ngọc Nghĩa - 25127431 - 25C11 - University of Science, VNU-HCM]
 Library:      SFML (Simple and Fast Multimedia Library)
+
 
 
