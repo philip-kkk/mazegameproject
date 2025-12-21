@@ -60,7 +60,7 @@ Prerequisites: SFML Library (v2.5+) and a C++17 compiler.
 
 ---------------------------------------------------------------------------------
 ## 4. USER GUIDE (HOW TO PLAY)
-* **Movement**: Use W, A, S, D or Arrow Keys to move one tile per turn.
+* **Movement**: Use Arrow Keys to move one tile per turn.
 * **Undo**: Press 'R' to reverse your last move or the "Undo" button.
 * **Reset**: Press 'M' to restart the current level or the "Reset" button.
 * **Exit game**: 'Q' to exit the game immediately
