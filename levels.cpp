@@ -21,7 +21,7 @@ int load_progress()
 void reset_progress()
 {
     ofstream fout("progress.txt");
-    int level = 4;
+    int level = 0;
     fout << level;
 }
 
@@ -100,7 +100,6 @@ int level_0(sf::RenderWindow &window)
     player.push_back({player_r, player_c});
     goblin.push_back({goblin_r, goblin_c});
 
-    // create SFML window ONCE
     int goblin2_r = -1, goblin2_c = -1;
     int slime_r = -1, slime_c = -1;
     int trap_r = -1, trap_c = -1;
@@ -121,24 +120,19 @@ int level_0(sf::RenderWindow &window)
                 window.close();
                 return -1;
             }
-            player_anim.moving = false;
             if (event.type == sf::Event::KeyPressed)
             {
                 switch (event.key.code)
                 {
-                case sf::Keyboard::W:
                 case sf::Keyboard::Up:
                     input = 'w';
                     break;
-                case sf::Keyboard::A:
                 case sf::Keyboard::Left:
                     input = 'a';
                     break;
-                case sf::Keyboard::S:
                 case sf::Keyboard::Down:
                     input = 's';
                     break;
-                case sf::Keyboard::D:
                 case sf::Keyboard::Right:
                     input = 'd';
                     break;
@@ -176,14 +170,14 @@ int level_0(sf::RenderWindow &window)
                 continue; // no key pressed, skip loop
 
             // Quit
-            if (input == 'q' || input == 'Q')
+            if (input == 'q')
             {
                 window.close();
                 return -1;
             }
 
             // redo
-            if (input == 'r' || input == 'R')
+            if (input == 'r')
             {
                 if (player.size() == 1)
                     continue;
@@ -204,7 +198,7 @@ int level_0(sf::RenderWindow &window)
             }
 
             // reset
-            if (input == 'm' || input == 'M')
+            if (input == 'm')
             {
                 // return to first stored location
                 player_r = player.front().first;
@@ -411,19 +405,15 @@ int run_level(vector<string> &maze, vector<vector<int>> &wall, sf::RenderWindow 
             {
                 switch (event.key.code)
                 {
-                case sf::Keyboard::W:
                 case sf::Keyboard::Up:
                     input = 'w';
                     break;
-                case sf::Keyboard::A:
                 case sf::Keyboard::Left:
                     input = 'a';
                     break;
-                case sf::Keyboard::S:
                 case sf::Keyboard::Down:
                     input = 's';
                     break;
-                case sf::Keyboard::D:
                 case sf::Keyboard::Right:
                     input = 'd';
                     break;
@@ -459,14 +449,14 @@ int run_level(vector<string> &maze, vector<vector<int>> &wall, sf::RenderWindow 
                 continue; // no key pressed, skip loop
 
             // Quit
-            if (input == 'q' || input == 'Q')
+            if (input == 'q')
             {
                 window.close();
                 return -1;
             }
 
             // Redo
-            if (input == 'r' || input == 'R')
+            if (input == 'r')
             {
                 if (player.size() == 1)
                     continue;
@@ -492,7 +482,7 @@ int run_level(vector<string> &maze, vector<vector<int>> &wall, sf::RenderWindow 
             }
 
             // Reset
-            if (input == 'm' || input == 'M')
+            if (input == 'm')
             {
                 player_r = player.front().first, player_c = player.front().second;
                 goblin_r = goblin.front().first, goblin_c = goblin.front().second;

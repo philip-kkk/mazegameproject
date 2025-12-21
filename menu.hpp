@@ -23,15 +23,14 @@ struct VideoBG
 bool video_init(VideoBG &v, const std::string &pattern, float fps);
 
 // gọi mỗi frame
-void video_update(VideoBG &v, int mx);
+void video_update(VideoBG &v, int mx, int reset_idx);
 
 // vẽ full window
 void video_draw(VideoBG &v, sf::RenderWindow &window, float startX, float startY);
 
 extern sf::Music menu_music;
 extern sf::Music fire_sound;
-extern sf::Music clicked_sound;
-extern sf::Music move_sound;
+extern sf::Music next_level_sound;
 extern sf::Music game_sound;
 extern sf::Music game_over_sound;
 extern sf::Music game_win_sound;
@@ -40,8 +39,12 @@ void start_menu_music();
 void stop_menu_music();
 void start_game_music();
 void stop_game_music();
-void start_footsteps();
-void stop_footsteps();
+void start_game_over_music();
+void stop_game_over_music();
+void start_next_level_music();
+void stop_next_level_music();
+void start_game_win_music();
+void stop_game_win_music();
 
 // BUTTON UTILITIES
 bool is_button_clicked(const sf::Event &event, float x, float y, float width, float height);

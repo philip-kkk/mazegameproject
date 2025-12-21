@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -70,13 +71,19 @@ extern EntityAnimation goblin_anim;
 extern EntityAnimation goblin2_anim;
 extern EntityAnimation slime_anim;
 
+extern sf::SoundBuffer buf_step, buf_slime, buf_goblin;
+extern sf::Sound snd_step_player;
+extern sf::Sound snd_step_goblin1;
+extern sf::Sound snd_step_goblin2;
+extern sf::Sound snd_step_slime;
+
 extern bool textures_loaded;
 extern const float ANIMATION_SPEED;
 void init_move_frames();
 void draw_animated_entity_multiframe(sf::RenderWindow &window, EntityAnimation &anim,
                                      sf::Texture &idle_up, sf::Texture &idle_down,
                                      sf::Texture &idle_left, sf::Texture &idle_right,
-                                     FrameAnim run[4], float delta_time);
+                                     FrameAnim run[4], float delta_time, sf::Sound &effect);
 void load_anh();
 void gameplay_fade_init(sf::RenderWindow &window);
 void gameplay_fade_start_in(float dur = 0.6f);

@@ -2,6 +2,7 @@
 #include "frontend.hpp"
 #include "menu.hpp"
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -10,6 +11,13 @@
 using namespace std;
 
 bool textures_loaded = false;
+static bool sfx_loaded = false;
+
+sf::SoundBuffer buf_step, buf_slime, buf_goblin;
+sf::Sound snd_step_player;
+sf::Sound snd_step_goblin1;
+sf::Sound snd_step_goblin2;
+sf::Sound snd_step_slime;
 
 EntityAnimation player_anim = {0, 0, 0, 0, 1.0f, false, 0.9f, 1, false};
 EntityAnimation goblin_anim = {0, 0, 0, 0, 1.0f, false, 1.8f, 1, false};
@@ -126,6 +134,59 @@ void load_anh()
     tex_wall_v.setRepeated(true);
 
     textures_loaded = true;
+}
+
+static void load_sfx()
+{
+    if (sfx_loaded)
+        return;
+
+    if (!buf_step.loadFromFile("Audio/concrete-footsteps-6752.wav"))
+    {
+        cout << "Cannot load footstep.wav\n";
+    }
+
+    if (!buf_slime.loadFromFile("Audio/slime_sound.wav"))
+    {
+        cout << "Cannot load slime_sound.wav\n";
+    }
+
+    if (!buf_goblin.loadFromFile("Audio/goblin_talk.wav"))
+    {
+        cout << "Cannot load goblin_talk.wav\n";
+    }
+
+    snd_step_player.setBuffer(buf_step);
+    snd_step_goblin1.setBuffer(buf_goblin);
+    snd_step_goblin2.setBuffer(buf_goblin);
+    snd_step_slime.setBuffer(buf_slime);
+
+    snd_step_player.setLoop(true);
+    snd_step_goblin1.setLoop(true);
+    snd_step_goblin2.setLoop(true);
+    snd_step_slime.setLoop(true);
+
+    snd_step_player.setVolume(120.f);
+    snd_step_goblin1.setVolume(70.f);
+    snd_step_goblin2.setVolume(70.f);
+    snd_step_slime.setVolume(70.f);
+
+    sfx_loaded = true;
+}
+
+static void update_loop_sound(sf::Sound &s, bool shouldPlay)
+{
+    auto st = s.getStatus();
+    if (shouldPlay)
+    {
+        if (st != sf::Sound::Playing)
+            s.play();
+    }
+    else
+    {
+        if (st == sf::Sound::Playing)
+            s.stop();
+    }
 }
 
 static bool gFadeActive = false;
@@ -266,6 +327,11 @@ void reset_animation_states()
     slime_anim.progress = 1.0f;
     slime_anim.is_animating = false;
     slime_anim.moving = false;
+
+    snd_step_player.stop();
+    snd_step_goblin1.stop();
+    snd_step_goblin2.stop();
+    snd_step_slime.stop();
 }
 
 void update_entity_animation(EntityAnimation &anim, float delta_time)
@@ -300,8 +366,9 @@ void start_entity_animation(EntityAnimation &anim, int start_r, int start_c, int
 void draw_animated_entity_multiframe(sf::RenderWindow &window, EntityAnimation &anim,
                                      sf::Texture &idle_up, sf::Texture &idle_down,
                                      sf::Texture &idle_left, sf::Texture &idle_right,
-                                     FrameAnim run[4], float delta_time)
+                                     FrameAnim run[4], float delta_time, sf::Sound &effect)
 {
+    update_loop_sound(effect, anim.moving);
     float current_r, current_c;
     if (anim.is_animating)
     {
@@ -449,7 +516,7 @@ void visualise_game(sf::RenderWindow &window, const vector<vector<int>> &wall,
                     int moves, int m_alive, int s_alive)
 {
     window.clear();
-
+    load_sfx();
     float delta_time = animation_clock.restart().asSeconds();
     init_move_frames();
     total_animation_time += delta_time;
@@ -493,6 +560,10 @@ void visualise_game(sf::RenderWindow &window, const vector<vector<int>> &wall,
         update_entity_animation(goblin2_anim, delta_time);
     }
 
+    update_loop_sound(snd_step_player, (player_r != -1) && player_anim.moving);
+    update_loop_sound(snd_step_goblin1, (goblin_r != -1) && goblin_anim.moving);
+    update_loop_sound(snd_step_goblin2, (goblin2_r != -1) && goblin2_anim.moving);
+
     draw_hud(window, moves, m_alive, s_alive);
     draw_maze(window, wall, win_r, win_c);
 
@@ -516,7 +587,7 @@ void visualise_game(sf::RenderWindow &window, const vector<vector<int>> &wall,
     if (slime_r != -1)
     {
         draw_animated_entity_multiframe(window, slime_anim, tex_slime_idle_up, tex_slime_idle_down,
-                                        tex_slime_idle_left, tex_slime_idle_right, slime_run, delta_time);
+                                        tex_slime_idle_left, tex_slime_idle_right, slime_run, delta_time, snd_step_slime);
     }
     gameplay_fade_update(delta_time);
     gameplay_fade_draw(window);

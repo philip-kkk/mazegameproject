@@ -147,6 +147,9 @@ void white_goblin_move(const vector<vector<int>> &wall,
         if (goblin_r == goblin2_r && goblin_c == goblin2_c)
         {
             goblin_r = -1; // goblin chết
+            anim.moving = false;
+            anim.is_animating = false;
+            anim.progress = 1.0f;
         }
         else if (goblin_r == slime_r && goblin_c == slime_c)
         {

@@ -11,11 +11,10 @@ using namespace std;
 
 sf::Music menu_music;
 sf::Music fire_sound;
-sf::Music clicked_sound;
-sf::Music move_sound;
 sf::Music game_sound;
 sf::Music game_over_sound;
 sf::Music game_win_sound;
+sf::Music next_level_sound;
 
 // Kích thước
 const int PADDING = 10;        // Khoảng đệm 10px
@@ -106,34 +105,72 @@ void stop_menu_music()
 
 void start_game_music()
 {
-    game_sound.openFromFile("Audio/adventures-loop-music-226836.wav");
+    game_sound.openFromFile("Audio/bg_gamemusic.wav");
     game_sound.setLoop(true);
-    game_sound.setVolume(100.f);
+    game_sound.setVolume(80.f);
+    fire_sound.setLoop(true);
+    fire_sound.setVolume(50.f);
     if (game_sound.getStatus() != sf::Music::Playing)
     {
         game_sound.play();
+    }
+    if (fire_sound.getStatus() != sf::Music::Playing)
+    {
+        fire_sound.play();
     }
 }
 
 void stop_game_music()
 {
     game_sound.stop();
+    fire_sound.stop();
 }
 
-void start_footsteps()
+void start_game_over_music()
 {
-    move_sound.openFromFile("Audio/concrete-footsteps-6752.wav");
-    move_sound.setLoop(true);
-    move_sound.setVolume(50.f);
-    if (move_sound.getStatus() != sf::Music::Playing)
+    game_over_sound.openFromFile("Audio/defeat-background-39613.wav");
+    game_over_sound.setLoop(true);
+    game_over_sound.setVolume(100.f);
+    if (game_over_sound.getStatus() != sf::Music::Playing)
     {
-        move_sound.play();
+        game_over_sound.play();
     }
 }
 
-void stop_footsteps()
+void stop_game_over_music()
 {
-    move_sound.stop();
+    game_over_sound.stop();
+}
+
+void start_next_level_music()
+{
+    next_level_sound.openFromFile("Audio/victory.wav");
+    next_level_sound.setVolume(100.f);
+    if (next_level_sound.getStatus() != sf::Music::Playing)
+    {
+        next_level_sound.play();
+    }
+}
+
+void stop_next_level_music()
+{
+    next_level_sound.stop();
+}
+
+void start_game_win_music()
+{
+    game_win_sound.openFromFile("Audio/game_win.wav");
+    game_win_sound.setLoop(true);
+    game_win_sound.setVolume(100.f);
+    if (game_win_sound.getStatus() != sf::Music::Playing)
+    {
+        game_win_sound.play();
+    }
+}
+
+void stop_game_win_music()
+{
+    game_win_sound.stop();
 }
 
 // Hàm load texture cho HUD button
@@ -283,14 +320,14 @@ bool video_init(VideoBG &v, const std::string &pattern, float fps)
 {
     v.pattern = pattern;
     v.fps = fps;
-    v.frame = 0;
+    v.frame = 1;
     v.clock.restart();
 
-    v.loaded = load_frame(v, 0);
+    v.loaded = load_frame(v, 1);
     return v.loaded;
 }
 
-void video_update(VideoBG &v, int mx)
+void video_update(VideoBG &v, int mx, int reset_idx)
 {
     if (!v.loaded)
         return;
@@ -303,8 +340,7 @@ void video_update(VideoBG &v, int mx)
     int next = v.frame + 1;
     if (next == mx)
     {
-        // loop về 0
-        next = 0;
+        next = reset_idx;
         if (!load_frame(v, next))
         {
             v.loaded = false;
@@ -325,13 +361,14 @@ void video_draw(VideoBG &v, sf::RenderWindow &window, float startX, float startY
     window.draw(v.spr);
 }
 
-VideoBG menu_video, game_bg_video;
+VideoBG menu_video, game_bg_video, gameover_video, gamewin_video;
 bool menu_video_loaded = false;
 bool game_bg_video_loaded = false;
+bool gameover_video_loaded = false;
+bool game_win_video_loaded = false;
 
 void draw_hud(sf::RenderWindow &window, int moves, int goblin_alive, int slime_alive)
 {
-    stop_menu_music();
     sf::Font font;
     if (!font.loadFromFile("_bitmap_font____romulus_by_pix3m-d6aokem.ttf"))
     {
@@ -355,7 +392,7 @@ void draw_hud(sf::RenderWindow &window, int moves, int goblin_alive, int slime_a
         }
     }
 
-    video_update(game_bg_video, 122);
+    video_update(game_bg_video, 122, 1);
     video_draw(game_bg_video, window, 500.f, 0.f);
 
     sf::Text hud_text;
@@ -391,7 +428,7 @@ void draw_hud(sf::RenderWindow &window, int moves, int goblin_alive, int slime_a
     guide_title.setPosition(SIDEBAR_WIDTH / 6.f, START_Y + LINE_SPACING * 4);
     window.draw(guide_title);
 
-    sf::Text guide_w("W, A, S, D or Arrow Keys: Move", font, 30);
+    sf::Text guide_w("Space/Arrow Keys: Don't move/Move", font, 25);
     guide_w.setFillColor(sf::Color::White);
     guide_w.setPosition(SIDEBAR_WIDTH / 6.f, START_Y + LINE_SPACING * 6 + 10);
     window.draw(guide_w);
@@ -439,7 +476,7 @@ void draw_main_menu(sf::RenderWindow &window)
         }
     }
 
-    video_update(menu_video, 195);
+    video_update(menu_video, 195, 1);
     video_draw(menu_video, window, 0.f, 0.f);
 
     sf::Sprite t(tex_title);
@@ -513,7 +550,7 @@ int handle_main_menu_input(sf::RenderWindow &window)
 
 void draw_how_to_play(sf::RenderWindow &window)
 {
-    video_update(menu_video, 195);
+    video_update(menu_video, 195, 1);
     video_draw(menu_video, window, 0.f, 0.f);
     sf::Font font;
     if (!font.loadFromFile("_bitmap_font____romulus_by_pix3m-d6aokem.ttf"))
@@ -533,14 +570,14 @@ void draw_how_to_play(sf::RenderWindow &window)
     instruction.setFillColor(sf::Color::White);
 
     std::string help_text =
-        "Goal: Escape the maze by reaching the Green square (Exit).\n\n"
-        "Player: Moves 1 space per turn.\n"
+        "Goal: Escape the maze by reaching the portal.\n\n"
+        "Player: Moves 1 space per turn (or don't move).\n"
         "Goblin: Moves 2 spaces per turn, following the shortest path.\n"
         "Slime: Moves 1 space per turn, following the shortest path.\n"
         "Trap: Stepping on it results in Game Over.\n"
         "(You still lost if a monster encounters you at the exit)\n\n"
         "Controls:\n"
-        "W, A, S, D (remember to turn off Telex) or Arrow Keys: Move\n"
+        "Space/Arrow Keys: Don't move/Move\n"
         "R: Undo last move\n"
         "M: Reset level\n\n"
         "Be strategic! Every turn matters.";
@@ -603,12 +640,16 @@ bool handle_how_to_play_input(sf::RenderWindow &window)
 // Game over
 void draw_game_over(sf::RenderWindow &window)
 {
-    video_update(menu_video, 195);
-    video_draw(menu_video, window, 0.f, 0.f);
-
-    sf::Font font;
-    if (!font.loadFromFile("arial.ttf"))
-        return;
+    if (!gameover_video_loaded)
+    {
+        gameover_video_loaded = video_init(gameover_video, "Media/gameoverFrames/frame_%04d.jpg", 30.f);
+        if (!gameover_video_loaded)
+        {
+            cout << "FAILED to load menu video frames! Check path.\n";
+        }
+    }
+    video_update(gameover_video, 122, 89);
+    video_draw(gameover_video, window, 0.f, 0.f);
 
     sf::Sprite titleSprite(tex_game_over);
     titleSprite.setOrigin(tex_game_over.getSize().x / 2.f, tex_game_over.getSize().y / 2.f);
@@ -671,14 +712,23 @@ bool handle_game_over_input(sf::RenderWindow &window)
 // Game win
 void draw_game_win(sf::RenderWindow &window)
 {
-    video_update(menu_video, 195);
-    video_draw(menu_video, window, 0.f, 0.f);
+    if (!game_win_video_loaded)
+    {
+        game_win_video_loaded = video_init(gamewin_video, "Media/gamewinFrames/frame_%04d.jpg", 30.f);
+        if (!game_win_video_loaded)
+        {
+            cout << "FAILED to load menu video frames! Check path.\n";
+        }
+    }
+
+    video_update(gamewin_video, 122, 76);
+    video_draw(gamewin_video, window, 0.f, 0.f);
 
     sf::Font font;
-    if (!font.loadFromFile("arial.ttf"))
+    if (!font.loadFromFile("_bitmap_font____romulus_by_pix3m-d6aokem.ttf"))
         return;
 
-    sf::Text title("CONGRATULATIONS!", font, 48);
+    sf::Text title("CONGRATULATIONS!", font, 68);
     title.setFillColor(sf::Color::Green);
 
     sf::FloatRect textRect = title.getLocalBounds();
@@ -686,7 +736,7 @@ void draw_game_win(sf::RenderWindow &window)
     title.setPosition(NEW_CENTER_X, 200.f);
     window.draw(title);
 
-    sf::Text subtitle("You have mastered the maze!", font, 24);
+    sf::Text subtitle("You have mastered the maze!", font, 50);
     subtitle.setFillColor(sf::Color::White);
     sf::FloatRect subRect = subtitle.getLocalBounds();
     subtitle.setOrigin(subRect.left + subRect.width / 2.0f, subRect.top + subRect.height / 2.0f);
@@ -749,12 +799,8 @@ bool handle_game_win_input(sf::RenderWindow &window)
 // Next level
 void draw_next_level_screen(sf::RenderWindow &window)
 {
-    video_update(menu_video, 195);
+    video_update(menu_video, 195, 1);
     video_draw(menu_video, window, 0.f, 0.f);
-
-    sf::Font font;
-    if (!font.loadFromFile("arial.ttf"))
-        return;
 
     sf::Sprite titleSprite(tex_level_clear);
     titleSprite.setOrigin(tex_level_clear.getSize().x / 2.f, tex_level_clear.getSize().y / 2.f);

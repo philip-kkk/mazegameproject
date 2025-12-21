@@ -251,16 +251,33 @@ int main()
         if (state != pre_state)
         {
             if (state == MENU)
-                start_menu_music();
-            if (pre_state == MENU && state == PLAYING)
-            {
-                stop_menu_music();
-                start_game_music();
-            }
-            if (pre_state == PLAYING && state != PLAYING)
             {
                 stop_game_music();
-                gameplay_fade_start_in(0.6f);
+                stop_game_win_music();
+                stop_game_over_music();
+                reset_animation_states();
+                start_menu_music();
+            }
+            if (state == NEXT_LEVEL && pre_state != NEXT_LEVEL)
+            {
+                stop_game_music();
+                start_next_level_music();
+            }
+            if (state == PLAYING && pre_state != PLAYING)
+            {
+                stop_menu_music();
+                stop_next_level_music();
+                start_game_music();
+            }
+            if (state == GAME_WIN && pre_state != GAME_WIN)
+            {
+                stop_game_music();
+                start_game_win_music();
+            }
+            if (state == GAME_OVER && pre_state != GAME_OVER)
+            {
+                stop_game_music();
+                start_game_over_music();
             }
             pre_state = state;
         }
