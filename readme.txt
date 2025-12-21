@@ -35,7 +35,6 @@ To ensure the game runs correctly, the following folder structure is maintained:
 ├──menu.hpp
 ├──visualise.hpp 
 ├──frontend.hpp
-├──main.hpp
 │
 │
 ├── /SFML
@@ -100,3 +99,4 @@ Developed by (Name + Student ID):
 * [Nguyễn Nhật Quỳnh - 25127131 - 25C11 - University of Science, VNU-HCM]
 * [Trần Ngọc Nghĩa - 25127431 - 25C11 - University of Science, VNU-HCM]
 Library:      SFML (Simple and Fast Multimedia Library)
+
