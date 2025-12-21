@@ -23,13 +23,13 @@ To ensure the game runs correctly, the following folder structure is maintained:
 ├── progress.txt
 ├── _bitmap_font____romulus_by_pix3m-d6aokem.ttf
 │
-├──main.exe
 │
 ├── main.cpp
 ├──logic.cpp 
 ├──levels.cpp 
-├──menu.cpp 
-├──visualise.cpp
+├──menu.cpp
+├──visualise.cpp   
+├──frontend.cpp 
 ├──logic.hpp 
 ├──levels.hpp 
 ├──menu.hpp
@@ -46,7 +46,7 @@ To ensure the game runs correctly, the following folder structure is maintained:
 
 3. COMPILATION AND INSTALLATION
 ---------------------------------------------------------------------------------
-Prerequisites: SFML Library (v2.5+) and a C++17 compiler.
+Prerequisites: SFML Library (v2.5.1) and a C++17 compiler.
 
 * For Command Line:
   g++ main.cpp frontend.cpp levels.cpp logic.cpp visualise.cpp menu.cpp -I SFML/include -L SFML/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -o main.exe
@@ -60,7 +60,7 @@ Prerequisites: SFML Library (v2.5+) and a C++17 compiler.
 
 4. USER GUIDE (HOW TO PLAY)
 ---------------------------------------------------------------------------------
-* Movement: Use W, A, S, D or Arrow Keys to move one tile per turn.
+* Movement: Use Arrow Keys to move one tile per turn.
 * Undo: Press 'R' to reverse your last move.
 * Reset: Press 'M' to restart the current level.
 * Exit game: 'Q' to exit the game immediately
@@ -71,7 +71,7 @@ Prerequisites: SFML Library (v2.5+) and a C++17 compiler.
   - Goblin: Aggressive, moves 2 tiles per turn towards you.
   - Slime: Slow, moves 1 tile per turn towards you.
   - Trap: Instant Game Over if stepped on.
-  - Stair: Your destination to clear the level.
+  - Portal: Your destination to clear the level.
 
 
 5. KNOWN ISSUES
@@ -79,23 +79,24 @@ Prerequisites: SFML Library (v2.5+) and a C++17 compiler.
 * Slime AI is not fully optimized.
 * Collision sometimes fails in corner cases.
 * Only 4 levels, no random generation.
-* No save/load system.
-* No sound effect transitions.
 
 
 6. FUTURE IDEAS
 ---------------------------------------------------------------------------------
 * Add boss monster (Minotaur).
 * Add shop system/power-up items.
+* Add more suitable effects.
+* Add sign in/sign-up option.
+* Add difficulty level (different enemy AI).
 * Procedural maze generation.
 
 
 7. CREDITS
 ---------------------------------------------------------------------------------
 Developed by (Name + Student ID):   
-* [Dương Trung Anh - 25127012]
-* [Hà Trần Bội Anh - 25127013]
-* [Nguyễn Tuấn Nghĩa - 25127101]
-* [Nguyễn Nhật Quỳnh - 25127131]
-* [Trần Ngọc Nghĩa - 25127431]
+* [Dương Trung Anh - 25127012 - 25C11 - University of Science, VNU-HCM]
+* [Hà Trần Bội Anh - 25127013 - 25C11 - University of Science, VNU-HCM]
+* [Nguyễn Tuấn Nghĩa - 25127101 - 25C11 - University of Science, VNU-HCM]
+* [Nguyễn Nhật Quỳnh - 25127131 - 25C11 - University of Science, VNU-HCM]
+* [Trần Ngọc Nghĩa - 25127431 - 25C11 - University of Science, VNU-HCM]
 Library:      SFML (Simple and Fast Multimedia Library)
