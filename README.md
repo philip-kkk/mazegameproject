@@ -29,12 +29,12 @@ To ensure the game runs correctly, the following folder structure is maintained:
 ├──levels.cpp 
 ├──menu.cpp 
 ├──visualise.cpp
+├──frontend.cpp
 ├──logic.hpp 
 ├──levels.hpp 
 ├──menu.hpp
 ├──visualise.hpp 
 ├──frontend.hpp
-├──main.hpp
 │
 │
 ├── /SFML
