@@ -16,13 +16,13 @@ The game features:
 ## 2. PROJECT STRUCTURE
 To ensure the game runs correctly, the following folder structure is maintained:
 
+```text
 [Source code]
 │
-├── readme.txt
+├── README.md
 ├── progress.txt
 ├── _bitmap_font____romulus_by_pix3m-d6aokem.ttf
 │
-├──main.exe
 │
 ├── main.cpp
 ├──logic.cpp 
@@ -47,6 +47,7 @@ To ensure the game runs correctly, the following folder structure is maintained:
 Prerequisites: SFML Library (v2.5+) and a C++17 compiler.
 
 * **For Command Line**:
+  ```bash
   g++ main.cpp frontend.cpp levels.cpp logic.cpp visualise.cpp menu.cpp -I SFML/include -L SFML/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -o main.exe
 
 * **For IDE (Visual Studio)**:
