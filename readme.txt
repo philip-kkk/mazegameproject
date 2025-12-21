@@ -99,5 +99,6 @@ Developed by (Name + Student ID):
 * [Trần Ngọc Nghĩa - 25127431 - 25C11 - University of Science, VNU-HCM]
 Library:      SFML (Simple and Fast Multimedia Library)
 
+Link Source Code: https://github.com/phiiplol/mazegameproject.git
 
 
