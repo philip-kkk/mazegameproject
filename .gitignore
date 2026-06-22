@@ -1,2 +1,34 @@
-﻿# Ignore Windows executables
+# Build outputs
 *.exe
+*.dll
+*.o
+*.obj
+*.pdb
+*.ilk
+*.lib
+*.a
+*.so
+*.dylib
+
+# Visual Studio / IDE
+.vs/
+Debug/
+Release/
+x64/
+x86/
+*.vcxproj.user
+
+# Local dependencies
+SFML/
+
+# Runtime/generated files
+progress.txt
+save/
+logs/
+
+# Raw media sources - keep final extracted/optimized assets only
+*.mp4
+
+# OS files
+.DS_Store
+Thumbs.db
